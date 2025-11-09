@@ -1,0 +1,1 @@
+export function saveScheme(name, scheme) { localStorage.setItem("scheme:" + name, JSON.stringify(scheme)); } export function loadScheme(name) { const raw = localStorage.getItem("scheme:" + name); return raw ? JSON.parse(raw) : null; } export function listSchemes() { return Object.keys(localStorage).filter(k => k.startsWith("scheme:")); }

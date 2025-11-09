@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{
+  --bg:#070707;
+  --panel:#0f1113;
+  --panel-opacity:1;
+  --accent:#00e5ff;
+  --accent2:#ff2dd4;
+  --grid-density:0.5;
+}
+html,body,#__next{height:100%}
+body{background:var(--bg); color:#e6eef2; font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial; margin:0; -webkit-user-select:text;}
+
+.panel { background: linear-gradient(180deg, rgba(10,12,14,var(--panel-opacity)), rgba(20,22,26,var(--panel-opacity))); border:1px solid rgba(0,215,255,0.08); box-shadow:0 12px 40px rgba(2,6,23,0.7); border-radius:12px; overflow:hidden; }
+
+/* UI enforcement */
+button, input, select, textarea, label, summary { -webkit-tap-highlight-color: transparent; touch-action: manipulation; cursor: pointer; pointer-events: auto !important; }
+.fixed, .floating-ui, .settings-button { z-index: 2147483646 !important; pointer-events: auto !important; }
+
+/* Plotly / SVG safety: allow interactions on plot area only, never full-screen overlays */
+.plotly, .js-plotly-plot, .svg-container, .plotly .main-svg { pointer-events: auto !important; z-index: 1 !important; }
+.plotly .overlay, .plotly .screen-cover, .plot-overlay-blocker, .plotly-opaque-overlay, .modebar-container { pointer-events: none !important; z-index: 0 !important; }
+
+/* Global defensive rule: any element that is full viewport sized and above z-index 1000 loses pointer-events */
+html body * {
+  --_w: 0px;
+}
+html body *:not(script):not(style) {
+  pointer-events: auto;
+}
+html body * {
+  position: relative;
+}
+
+/* Diagnostic highlight box (injected by helper script) */
+#__ui_blocker_debug {
+  position: fixed;
+  pointer-events: none;
+  border: 3px dashed rgba(255,40,40,0.95);
+  background: rgba(255,40,40,0.06);
+  z-index: 2147483645;
+  mix-blend-mode: overlay;
+}
